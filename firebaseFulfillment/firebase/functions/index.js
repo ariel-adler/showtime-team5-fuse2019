@@ -16,7 +16,12 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   function welcome(agent) {
     agent.add(`Welcome to my agent!`);
   }
- 
+
+  function findMovie(agent) {
+    var genre = agent.get('movie-genre');
+    agent.add(`Available movies for genre ` + genre + ': Cool movie, Best movie, ');
+  }
+
   function fallback(agent) {
     agent.add(`I didn't understand`);
     agent.add(`I'm sorry, can you try again?`);
@@ -55,7 +60,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
-  // intentMap.set('your intent name here', yourFunctionHandler);
+  intentMap.set('watch-a-movie', findMovie);
   // intentMap.set('your intent name here', googleAssistantHandler);
   agent.handleRequest(intentMap);
 });
